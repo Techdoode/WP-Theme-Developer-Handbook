@@ -1,0 +1,108 @@
+<h3>Introduction</h3>
+
+When a viewer clicks on a link to one of the Tags on your site, he or she is taken to a page listing the <a href="http://codex.wordpress.org/Writing_Posts" target="_blank">Posts</a> using that particular Tag in chronological order, from newest Posts at the top to oldest at the bottom. There are many display choices, including whether to display the complete post or post excerpts, and what additional information to display (title, author, publish date, last modified time, etc.). Each theme makes different choices, and you might want to change them.
+
+This article explains how to change what happens when the blog viewer is visiting one of your site's Tag pages. This involves the use of Themes and Template files, so if you are new to template files, you might want to read <a href="http://codex.wordpress.org/Using_Themes" target="_blank">Using Themes</a> and <a href="http://codex.wordpress.org/Stepping_Into_Templates">Stepping Into Templates</a> first.
+
+Permalinks to tag archives are controlled <a href="http://codex.wordpress.org/Using_Permalinks#Category_base_and_Tag_base" target="_blank">Using Permalinks</a> settings.
+<h4>What Template File is Used?</h4>
+The first step in modifying what happens when someone visits a Tag page is to figure out which of your theme's files is going to be used to display the posts. This is known as the <a href="http://codex.wordpress.org/Template_Hierarchy" target="_blank">Template Hierarchy</a>.
+
+In the case of tags, the hierarchy is fairly simple. For instance, suppose the slug of the Tag in question is slug. The Template Hierarchy specifies that WordPress will use the first Template file it finds in your current Theme's directory from the following list:
+<ol>
+<li>tag-slug.php</li>
+<li>tag-id.php</li>
+<li>tag.php</li>
+<li>archive.php</li>
+<li>index.php</li>
+</ol>
+That is, if you do not have a tag-slug.php, WordPress will check for a tag-id.php, and so on.
+
+So, if you want to make the Tag whose ID number is 6 look different from what it is currently (and different from other Tag pages), you would want to create a tag-slug.php file. If you want to make all Tag pages look different from other archive pages (such as date and author archives), then you would want to create or modify the tag.php file. If you want to make changes to the look of all archive pages, you can create or modify the archive.php file. And if you modify the index.php file, you will affect your entire blog.
+
+If you need to create a new file, it is a good idea to copy it from the next file in the hierarchy that exists. For instance, if you want a special display for the tag "slug", begin by copying the tag.php file, or if you don't have one, use archive.php, and so on.
+
+<h3>Examples</h3>
+Now that you've figured out which template file in your theme's directory you need to modify, in order to make changes to the look of Tag pages, let's look at some examples. In these examples, when it says "edit your template file", it means to edit the file you chose in the section above.
+
+<h4>Adding Text to Tag Pages</h4>
+<h5>Static Text Above Posts</h5>
+
+Suppose you want some static text displayed before the list of Posts on your Tag page(s). By "static", we mean text that remains the same, no matter which posts will be displayed below, and no matter which Tag is being displayed. Here is how to do it: above <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/the-loop/" target="new">The Loop</a> section of your Template file, insert the following code:
+[html]
+
+<p>
+This is some text that will display at the top of the Tag page.
+</p>
+
+[/html]
+
+<h5>Different Text on Some Tag Pages</h5>
+
+A slightly more complex possibility is that you want different text to display depending on which Tag page the visitor is viewing. Then you would add the "default" text to the main tag.php file, and create special tag-slug.php files (with their own version of the text, as described in the Introduction) for each Tag that needs special text at the top.
+
+<h5>Text Displaying Only on First Page of Archive</h5>
+
+Another thing that can happen is that if your Tag contains more posts than will fit on one page (according to the Options for Blog Reading you have set in the Administration panels of your blog), the Tag archive will split into multiple pages. And maybe you only want to display your static text if the viewer is on the first page of results, or you want to display different text for the other pages.
+
+To make this happen, you can use a PHP if statement, which looks at the value of the $paged WordPress variable ($paged is equal to the page number: 1 for the first page of results, 2 for the second page, etc.). It may sound complicated, but it's actually not too bad. Just put the following above <a href="http://codex.wordpress.org/Using_Permalinks#Category_base_and_Tag_base" target="_blank">The Loop</a>:
+[php]
+
+<?php if ( $paged < 2 ) { 
+<p>Text for first page of Tag archive.</p>
+<?php } else { 
+<p>Text for subsequent pages of Tag.
+Can be left out.</p>
+<?php } ?>
+
+[/php]
+
+<h5>Tag Name</h5>
+
+Another possibility is to put the Tag name at the top of the page. If this is not already part of your template, you can add it by doing something like this, above <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/the-loop/" target="_blank">The Loop</a>:
+[php]
+
+<p>Tag: <?php single_tag_title(); ?></p>
+
+[/php]
+
+<h4>Modifying How Posts are Displayed</h4>
+<h5>Excerpts vs. Full Posts</h5>
+
+Perhaps you are looking to cut down on the size of your Tag pages. You could do this by displaying excerpts rather than the entire content of each Post. To do this, you will just need to find where it says<a href="http://codex.wordpress.org/Template_Tags/the_content" target="_blank"> the_content()</a> inside <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/the-loop/" target="_blank">The Loop</a> in your Template, and replace it with <a href="http://codex.wordpress.org/Template_Tags/the_excerpt" target="_blank">the_excerpt()</a>. These will most likely be inside PHP tags:
+[php]
+  
+ <?php the_excerpt(); ?>
+and
+  <?php the_content(); ?>
+
+[/php]
+Conversely, if your Theme is currently displaying excerpts and you want full posts, replace the_excerpt with the_content.
+<h5>Display Images Linking to Full Posts</h5>
+
+Another thing that is interesting to do in a Tag archive page is to replace the post content with an image that links to your post. To do this, you will first need to put images into the Excerpt sections of your posts. Here's how to do that, for one post:
+
+<ol>
+<li>Upload an image on the post editing screen.</li>
+<li>Switch to the "Code" editor, rather than the "Visual" editor.</li>
+<li>Use the Uploads / Browse tab to insert the image into your post. Make sure to insert the full-sized image, with no link.</li>
+<li>Copy the inserted HTML img tag, and paste it into the "Optional Excerpt" section of the post editing screen.</li>
+<li>Finish writing the post content (you can remove the image), and publish the post.</li>
+</ol>
+Now you will need to modify your template. We'll use a trick: the <a href="http://codex.wordpress.org/Template_Tags/the_excerpt_rss" target="_blank">the_excerpt_rss()</a> Template Tag does not put a paragraph tag around the excerpt. So we can use it to insert the img HTML and put it inside a link. Here's what you need to put into your Template, in place of using the_content:
+
+[php]
+
+<a href="<?php the_permalink() ?>">
+<?php the_excerpt_rss(); ?>
+</a>
+
+[/php]
+
+Caveat: using the excerpt this way may effect your RSS feed, because it places an img tag in the excerpt, instead of text. So if you are going to do this, you probably want to set your options so that the full posts are put in RSS feeds, rather than excerpts.
+
+<h3>Further Reading</h3>
+<a href="http://wordpress.org/support/topic/required-tag-functions-in-23-missing?replies=27" target="_blank">Support Forum discussion of Tag Templates</a> 
+<a href="http://codex.wordpress.org/Template_Tags/the_excerpt" target="_blank">Templates</a> - Comprehensive list of resources related to Themes and Templates
+<h3>Related</h3>
+Template Hierarchy: Category Templates, Tag Templates, Taxonomy Templates, Page Templates, Post Type Templates, Author Templates, Date Templates, Search Templates, 404 Templates, Attachment Templates, Loop Templates
