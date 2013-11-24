@@ -1,15 +1,15 @@
 <h3>Overview</h3>
 
 
-By default, when a user clicks on a <a href="http://codex.wordpress.org/Writing_Posts" target="_blank">Post's</a> Category hyperlink, WordPress displays a page of Posts in reverse chronological order filtered by that category.
+When a user clicks on a <a href="http://codex.wordpress.org/Glossary#Post" target="_blank">Post's</a> Category hyperlink, WordPress displays a page of Posts in reverse chronological order filtered by that category.
 
-The look and feel of this page is determined by the index.php template file.
+By default, the look and feel of this page is determined by the index.php template file.
 
-The theme developer can create several optional template files that will override and refine this behavior.
+The theme developer can create several optional template files that will override and refine this behavior, including archive, category, and tag templates.
 
-<h3>Category Template Hierarchy</h3>
+In section discusses Category Templates and how to create them.
 
-WordPress will display posts by category based on the following <a href="http://codex.wordpress.org/Template_Hierarchy" target="_blank">Template Hierarchy</a>:
+WordPress display posts by category based on the following <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/template-hierarchy/" target="_blank">Template Hierarchy</a>:
 
 <ol>
 <li>category-slug.php</li>
@@ -19,19 +19,13 @@ WordPress will display posts by category based on the following <a href="http://
 <li>index.php</li>
 </ol>
 
-When a user clicks a Category hyperlink, WordPress will search for a template file in the order listed above.  If it fails to find any of the specialized category templates or an archive.php template file, it will revert to the default behavior basing the page on index.php.
+WordPress searchs for a template file in the order listed above.  If it fails to find any of the specialized category templates or an archive.php template file, it will revert to the default behavior, basing the page on index.php.
 
-The archive.php template file provides the most general form of control, allowing you make all Post pages different from other WordPress pages.
+The archive.php template provides the most general form of control, telling WordPress treat all Post pages differently from other WordPress pages.
 
-The three category template pages allow more specific control over Posts filtered by category in the case of category.php, and specific category posts in the case of category-slug.php and category-ID.php.
+The category.php template allow Posts filtered by category to be treated differently from unfiltered Posts or Posts filtered by some other taxonomy.
 
-First WordPress looks for category template based on the <a href="http://codex.wordpress.org/Glossary#Post_Slug" target="_blank">Post Slug</a>, which allows you to format a single post differently from all other posts.  Likewise, a category template based on ID will refernce a single post.
-
- The first two offer the highest degree of specificity and control.  Creating these templates allow you to style a specific entry slug or ID.  You can create a category.php template to control how all categories display.  The next template reverts to how you
-
-That is, if you do not have a category-slug.php (lets say category-news.php), WordPress will check for a category-ID.php (like category-6.php), and so on.
-
-So, if you want to make the Category whose ID number is 6 look different from what it is currently (and different from other Category pages), you would want to create a category-6.php file. If you want to make all Category pages look different from other archive pages (such as date and author archives), then you would want to create or modify the category.php file. If you want to make changes to the look of all archive pages, you can create or modify the archive.php file. And if you modify the index.php file, you will affect your entire blog.
+The category-<slug>.php and category-<ID>.php allow Posts filered by a specific post slug or post ID to be treated differently from other Posts.  This allows you, for example, to format all Posts in the "news" category into a page that looks diffently from Posts filtered on other categories.
 
 If you need to create a new file, it is a good idea to copy it from the next file in the hierarchy that exists. For instance, if you want a special display for Category 6, begin by copying the category.php file, or if you don't have one, use archive.php, and so on.
 <h4>Examples</h4>
