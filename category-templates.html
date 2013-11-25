@@ -7,13 +7,13 @@ By default, the look and feel of this page is determined by the index.php templa
 
 The theme developer can create several optional template files that will override and refine this behavior, including archive, category, and tag templates.
 
-In section discusses Category Templates and how to create them.
+In section discusses <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/template-hierarchy/#category" target="_blank">Category Templates</a> and how to create them.
 
 WordPress display posts by category based on the following <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/template-hierarchy/" target="_blank">Template Hierarchy</a>:
 
 <ol>
-<li>category-slug.php</li>
-<li>category-ID.php</li>
+<li>category-{slug}.php</li>
+<li>category-{ID}.php</li>
 <li>category.php</li>
 <li>archive.php</li>
 <li>index.php</li>
@@ -25,7 +25,7 @@ The archive.php template provides the most general form of control, telling Word
 
 The category.php template allow Posts filtered by category to be treated differently from unfiltered Posts or Posts filtered by some other taxonomy.
 
-The category-<slug>.php and category-<ID>.php allow Posts filered by a specific post slug or post ID to be treated differently from other Posts.  This allows you, for example, to format all Posts in the "news" category into a page that looks diffently from Posts filtered on other categories.
+The category-{slug}.php and category-{ID}.php allow Posts filered by a specific post slug or post ID to be treated differently from other Posts.  This allows you, for example, to format all Posts in the "news" category into a page that looks diffently from Posts filtered on other categories.
 
 If you need to create a new file, it is a good idea to copy it from the next file in the hierarchy that exists. For instance, if you want a special display for Category 6, begin by copying the category.php file, or if you don't have one, use archive.php, and so on.
 <h4>Examples</h4>
