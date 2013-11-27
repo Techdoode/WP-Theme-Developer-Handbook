@@ -1,6 +1,5 @@
 <h3>Overview</h3>
 
-
 When a user clicks on a <a href="http://codex.wordpress.org/Glossary#Post" target="_blank">Post's</a> Category hyperlink, WordPress displays a page of Posts in reverse chronological order filtered by that category.
 
 By default, the look and feel of this page is determined by the index.php template file.
@@ -27,10 +26,18 @@ The category.php template allow Posts filtered by category to be treated differe
 
 The category-{slug}.php and category-{ID}.php allow Posts filered by a specific post slug or post ID to be treated differently from other Posts.  This allows you, for example, to format all Posts in the "news" category into a page that looks diffently from Posts filtered on other categories.
 
-If you need to create a new file, it is a good idea to copy it from the next file in the hierarchy that exists. For instance, if you want a special display for Category 6, begin by copying the category.php file, or if you don't have one, use archive.php, and so on.
+<h3>Creating Category Template Files</h3>
+
+So, now you've decided that your design dictates that you need to control the look and feel of your Posts based on their category.  Where do you start?
+
+Rather than starting from a blank file, it is good practice to copy the next file in the hierarchy, if it exists.  If you've already created an archive.php, make a copy called category.php and modify that to suit your design needs.  If you don't have an archive.php file, use a copy of your theme's index.php as a starting point.
+
+Follow the same procedure if you are creating a category-{slug}.php or category-{ID}.php file.  Use a copy of your archive.php, category.php, or index.php as a starting point.
+
+
 <h4>Examples</h4>
 
-Now that you've figured out which template file in your theme's directory you need to modify, in order to make changes to the look of Category pages, let's look at some examples. In these examples, when it says "edit your template file", it means to edit the file you chose in the section above.
+Now that you've detrimined which template file in your theme's directory you need to modify, in order to make changes to the look of Category pages, let's look at some examples. In these examples, when it says "edit your template file", it means to edit the file you chose in the section above.
 
 <h3>Adding Text to Category Pages</h3>
 <h4>Static Text Above Posts</h4>
