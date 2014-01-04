@@ -1,0 +1,160 @@
+When a visitor clicks on a <a href="http://codex.wordpress.org/Glossary#Post" target="_blank">Post's</a> taxonomy hyperlink, whether that's a category, tag, or custom taxonomy, WordPress displays a page of Posts in reverse chronological order filtered by that taxonomy.
+
+By default, the look and feel of this page is determined by the index.php template file.
+
+When you create your theme, you can create several optional template files that will override and refine this behavior, including archive, category, taxonomy, and tag templates.
+
+This section introduces you to how can create them.
+
+WordPress uses the <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/template-hierarchy/" target="_blank">Template Hierarchy</a> to determine how to display the posts.
+
+In the case of categories, it looks for the <code>category-{slug}.php</code> file, if it doesn't it exist then it looks for <code>category-{ID}.php</code> and so on, moving down the hierarchy until it reaches index.php.
+
+<h3>Taxonomy Template Hierarchy</h3>
+
+<h4>Category</h4>
+
+<ol>
+<li>category-{slug}.php</li>
+<li>category-{ID}.php</li>
+<li>category.php</li>
+<li>archive.php</li>
+<li>index.php</li>
+</ol>
+
+<h4>Tag</h4>
+
+<ol>
+<li>tag-{slug}.php</li>
+<li>tag-{id}.php</li>
+<li>tag.php</li>
+<li>archive.php</li>
+<li>index.php</li>
+</ol>
+
+<h4>Custom Taxonomy</h4>
+
+<ol>
+<li>taxonomy-{taxonomy}-{term}.php</li>
+<li>taxonomy-{taxonomy}.php</li>
+<li>taxonomy.php</li>
+<li>archive.php</li>
+<li>index.php</li>
+</ol>
+
+If WordPress fails to find any of the specialized templates or an archive.php template file, it will revert to the default behavior, using index.php.
+
+The archive.php template provides the most general form of control, providing a layout for all archives - i.e. a page that displays a list of posts.
+
+The category.php, tag.php, and taxonomy.php templates allow Posts <strong>filtered</strong> by taxonomy to be treated differently from <strong>unfiltered</strong> Posts or Posts <strong>filtered by some other taxonomy</strong>.
+
+These files let you target specific taxonomy terms:
+<ul>
+<li>taxonomy-{taxonomy}-{term}.php</li>
+<li>taxonomy-{taxonomy}.php</li>
+<li>tag-{slug}.php</li>
+<li>tag-{id}.php</li>
+<li>category-{slug}.php</li>
+<li>category-{ID}.php</li>
+</ul>
+
+So, for example, you could format all Posts in the "news" category into a page that looks different to Posts filtered in other categories.
+
+<h3>Creating Taxonomy Template Files</h3>
+
+Now you've decided that your design dictates that you need to control the look and feel of your Posts based on their taxonomy.  Where do you start?
+
+Rather than starting from a blank file, it is good practice to <strong>copy the next file in the hierarchy</strong>, if it exists.  If you've already created an archive.php, make a copy called category.php and modify that to suit your design needs.  If you don't have an archive.php file, use a copy of your theme's index.php as a starting point.
+
+Follow the same procedure if you are creating any taxonomy template file.  Use a copy of your archive.php, category.php, tag.php, or index.php as a starting point.
+
+
+<h3>Examples</h3>
+
+Now that you've determined which template file in your theme's directory you need to modify, in order to make changes to the look of your taxonomy's archive pages, let's look at some examples. 
+
+<h3>Adding Text to Category Pages</h3>
+<h4>Static Text Above Posts</h4>
+
+Suppose you want some static text displayed before the list of Posts on your Category page(s). "Static" is text that remains the same, no matter which posts are displayed below, and no matter which category is displayed.
+
+Open your file and above <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/the-loop/" title="The Loop">The Loop</a> section of your Template file, insert the following code:
+[html]
+
+<p>
+This is some text that will display at the top of the Category page.
+</p>
+
+[/html]
+
+This text will only display on an archive page displaying posts in that category.
+
+<h4>Different Text on Some Category Pages</h4>
+
+A more complex possibility is that you want to display different text depending on which category page the visitor is viewing. You could add default text to the main category.php file, and create special category-{slug}.php files each with their own version of the text. 
+
+The downside to this is that it creates a lot of files in your theme directory. Instead, you can use <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/conditional-tags/" title="Conditional Tags">conditional tags</a>. 
+
+Again, this code would be added before the loop:
+
+[php]
+
+<?php if (is_category('Category A')) : ?>
+<p>This is the text to describe category A</p>
+<?php elseif (is_category('Category B')) : ?>
+<p>This is the text to describe category B</p>
+<?php else : ?>
+<p>This is some generic text to describe all other category pages, 
+I could be left blank</p>
+<?php endif; ?>
+
+[/php]
+
+This does the following:
+
+<ol>
+<li>checks to see if the visitor has requested Category A. If it is, it displays the first piece of text.</li>
+<li> if the user didn't request category A, it checks for category B. If it is, it displays the second piece of text.</li>
+<li>if neither was requested WordPress displays the default text.</li>
+</ol>
+
+<h4>Display Text only on First Page of Archive</h4>
+If you have more posts than will fit on one page of your archive, the category will split into multiple pages. Perhaps you just want to display static text if the user is on the first page of the results. 
+
+To do this, use a PHP if statement, which looks at the value of the $paged WordPress variable. 
+
+Put the following above The Loop:
+
+[php]
+
+<?php if ( $paged < 2 ) : ?>
+<p>Text for first page of Category archive.</p>
+<?php else : ?>
+<p>Text for subsequent pages of Category.
+Can be left out.</p>
+<?php endif; ?>
+
+[/php]
+
+This code asks whether the page displayed is the first page of the archive; if it is, the text for the first page is displayed. Otherwise, the text for the subsequent pages is displayed.
+
+<h3>Modifying How Posts are Displayed</h3>
+
+<h4>Excerpts vs. Full Posts</h4>
+
+You can choose whether to display full posts or just excerpts. By displaying excerpts you shorten the length of your archive page.
+
+Open your file and find the loop. Look for:
+[php]
+the_content()
+[/php]
+
+And replace it with:
+
+[php]
+the_excerpt()
+[/php]
+
+And if your theme is displaying excerpts but you want to display the full content, replace <code>the_excerpt</code>with <code>the_content</code>.
+
+ 
