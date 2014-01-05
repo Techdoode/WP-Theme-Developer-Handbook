@@ -58,13 +58,15 @@ A number of templates display taxonomies. These are:
 <h4>Displaying Terms</h4>
 Taxonomies can be used to output single terms and lists of terms. A few examples of helpful functions are [need feedback on helpful theme functions]:
 <ul>
-	<li>get_taxonomy()</li>
-	<li>get_taxonomies()</li>
-	<li>get_term()</li>
-	<li>get_the_terms()</li>
-	<li>get_the_term_list()</li>
-	<li>get_term_link()</li>
-	<li>wp_get_object_terms()</li>
+	<li>the_category() - Displays a link to the category or categories a post belongs to. This tag must be used within The Loop.</li>
+	<li>the_tags() - This template tag displays a link to the tag or tags a post belongs to. If no tags are associated with the current entry, nothing is displayed. This tag should be used within The Loop.</li>
+	<li>get_taxonomy() - Get the object containing a taxonomy's settings (metadata).</li>
+	<li>get_taxonomies() - Get a list of registered taxonomy objects.</li>
+	<li>get_term() - Get all Term data from database by Term ID.</li>
+	<li>get_the_terms() - Retrieve the terms of the taxonomy that are attached to the post.</li>
+	<li>get_the_term_list() - Returns an HTML string of taxonomy terms associated with a post and given taxonomy. Terms are linked to their respective term listing pages</li>
+	<li>get_term_link() - Returns permalink for a taxonomy term archive, or a WP_Error object if the term does not exist.</li>
+	<li>wp_get_object_terms() - Retrieves the terms associated with the given object(s), in the supplied taxonomies.</li>
 </ul>
 
 <h4>Creating &amp; Editing Terms</h4>
