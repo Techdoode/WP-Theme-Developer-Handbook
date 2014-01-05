@@ -1,0 +1,82 @@
+Taxonomy is the practice and science of classification. When you use a taxonomy in WordPress, you're grouping similar things together. The taxonomy refers to the sum of those groups.
+
+There are two default taxonomies in WordPress - categories and tags. These are both ways to group your posts together. 
+
+<strong>Terms</strong> are the individual groups within a taxonomy. For example:
+<ul>
+<li>The <strong>vehicle</strong> taxonomy, could have the <em>terms</em> car, moped, motorbike</li>
+<li>The <strong>country</strong> taxonomy, could have the <em>terms</em>India, Russia, Japan</li>
+</ul>
+
+<h3>Database Tables</h3>
+
+Taxonomies and terms are stored in the following database tables:
+
+<ul>
+<li>terms</li>
+<li>term_taxonomy</li>
+<li>term_relationships</li>
+</ul>
+
+In the database, taxonomy terms are small collections of data stored in the "terms" table. This table contains some of the the basic data fields like the name ("name") and the slug ("slug"). Additional fields are stored in the "term_taxonomy" table, like the taxonomy type ("taxonomy"), the description ("description"), and the hierarchical information ("parent"). Terms are associated to content items using the "term_relationships" table.
+
+<h3>Template</h3>
+
+A number of templates display taxonomies. These are:
+
+<strong>Category Display</strong>
+<ul>
+<li>category-{slug}.php - If the category's slug were news, WordPress would look for category-news.php</li>
+<li>category-{id}.php - If the category's ID were 6, WordPress would look for category-6.php</li>
+<li>category.php</li>
+<li>archive.php</li>
+<li>index.php</li>
+</ul>
+
+<strong>Tag Display</strong>
+
+<ul>
+<li>tag-{slug}.php - If the tag's slug were sometag, WordPress would look for tag-sometag.php</li>
+<li>tag-{id}.php - If the tag's ID were 6, WordPress would look for tag-6.php</li>
+<li>tag.php</li>
+<li>archive.php</li>
+<li>index.php</li>
+</ul>
+
+<strong>Custom Taxonomy Display</strong>
+
+<ul>
+<li>taxonomy-{taxonomy}-{term}.php - If the taxonomy were sometax, and taxonomy's term were someterm WordPress would look for taxonomy-sometax-someterm.php. In the case of Post Formats, the taxonomy is 'post_format' and the terms are 'post-format-{format}. i.e. taxonomy-post_format-post-format-link.php</li>
+<li>taxonomy-{taxonomy}.php - If the taxonomy were sometax, WordPress would look for taxonomy-sometax.php</li>
+<li>taxonomy.php</li>
+<li>archive.php</li>
+<li>index.php</li>
+</ul>
+
+<h3>APIs</h3>
+
+<h4>Displaying Terms</h4>
+Taxonomies can be used to output single terms and lists of terms. A few examples of helpful functions are [need feedback on helpful theme functions]:
+<ul>
+	<li>get_taxonomy()</li>
+	<li>get_taxonomies()</li>
+	<li>get_term()</li>
+	<li>get_the_terms()</li>
+	<li>get_the_term_list()</li>
+	<li>get_term_link()</li>
+	<li>wp_get_object_terms()</li>
+</ul>
+
+<h4>Creating &amp; Editing Terms</h4>
+Terms themselves can be created, edited and deleted using API functions such as:
+<ul>
+<li>wp_insert_term()</li>
+<li>wp_update_term()</li>
+<li>wp_delete_term()</li>
+</ul>
+
+<h3>Custom Taxonomies</h3>
+
+If the default taxonomies do not suffice, you can create new taxonomies. As with custom post types, however, we recommend that you put this functionality in a plugin. This ensures that when the user changes their website's design, their content is preserved in the plugin. 
+
+You can read more about creating custom taxonomies in the Plugin Developer Handbook.
