@@ -14,11 +14,20 @@ We'll cover:
 
 <h3>What is the Index Template?</h3>
 
-The Index Template, <code>index.php</code>, serves several functions in a WordPress theme.  First, it is one of  <a href="http://make.wordpress.org/docs/theme-developer-handbook/introduction/what-is-a-theme/#required-files" target=""> two required</a> theme files.  Secondly, it serves as a pattern for several optional files.  Lastly, it is the fallback file in case the optional files are missing.
+The Index Template, <code>index.php</code>, along with style.css, is one of two files required by a WordPress theme.  It serves a similar function to index files in a standard website, a repository for the main page markup.  
 
-While it is possible to get by with just these two files, creating a few additonal files will allow you to take full advantage of the power of WordPress.
+In the absense of any other files, WordPress uses index.php for everything.  In more complex websites, WordPress uses this file as the final fallback to render the entire website if it can't find a particular template file in the template hierarchy.
 
-The Index Template includes these additional files at the appropriate time.  Additionally, the Index Template contains <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/the-loop/">The Loop</a>, which is the engine that drives the listing of your Posts.
+While it is possible to put all your markup in <code>index.php</code>, breaking up the main logical sections of the page into separate files allows greater degree of flexibility and modularity.
+
+These files are then included at the appropriate places in <code>index.php</code>.  
+
+Additionally, the Index Template contains <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/the-loop/">The Loop</a>, which is the engine that drives the listing of your Posts.
+
+However this file serves additional functions in WordPress.   Firstly, it is one of  <a href="http://make.wordpress.org/docs/theme-developer-handbook/introduction/what-is-a-theme/#required-files" target=""> two required</a> theme files.  Secondly, it serves as a pattern for several optional files.  Lastly, it is the fallback file in case the optional files are missing.
+
+
+
 
 <h3>Basic Structure</h3>
 
@@ -32,14 +41,11 @@ In the following graphic, you can see the parts of a typical WordPress webpage, 
 </ul>
 <img src="http://make.wordpress.org/docs/files/2014/01/WordPressBuildingBlocks1.jpg" alt="WordPressBuildingBlocks" width="800" height="616" class="alignnone size-medium wp-image-3293" />
 
-Before jumping into the Index Template, let's address the files that will make up our page.
-
-Ready?  Let's get started!
 
 
 <h4>Index Template Outline</h4>
 
-<h5><strong>File Information and Header Call</strong></h5>
+<h5><strong>File Information and Header Include</strong></h5>
 
 The first section of <code>index.php</code> contains information about the file in <a href="http://en.wikipedia.org/wiki/PHPDoc">PHPDoc</a> format.  It is always good practice to comment your code, and this format enables the automatic creation of documentation using a document generator program.  
 
@@ -62,8 +68,10 @@ Immediately following the document information we include <code>header.php</code
  */
 get_header(); ?>[/php]
 
+At this point, you may optionally HTML tags or other coding, or you may jump directly into <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/the-loop/">The Loop</a>.
+[php]
 
-
+[/php]
 
 <h4>Header</h4>
 As you might have guessed, <code>header.php</code> includes everything that would appear in top section of a standard HTML page, including the up to and including the opening body tag.
