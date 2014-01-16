@@ -1,14 +1,14 @@
 <h3>Overview</h3>
 
-In this article, we'll use some of what we've learned so far to build a simple theme.
+Now that you've had a good introduction to the components of a theme, it's time to put it all together to build a simple theme.
 
 We'll cover:
 
 <ul>
-	<li><code>index.php</code></li>
-	<li><code>header.php</code></li>
-	<li><code>sidebar.php</code></li>
-	<li><code>footer.php</code></li>
+	<li>index.php</li>
+	<li>header.php</li>
+	<li>sidebar.php</li>
+	<li>footer.php</li>
 </ul>
 
 
@@ -16,7 +16,7 @@ We'll cover:
 
 The Index Template, <code>index.php</code>, along with style.css, is one of two files required by a WordPress theme.  It serves a similar function to index files in a standard website, a repository for the main page markup.  
 
-In the absense of any other files, WordPress uses index.php for everything.  In more complex websites, WordPress uses this file as the final fallback to render the entire website if it can't find a particular template file in the template hierarchy.
+In the absense of any other files, WordPress uses index.php for everything.  In more complex websites, WordPress uses this file as the final fallback to render the entire website if it can't find a particular file in the template hierarchy.
 
 While it is possible to put all your markup in <code>index.php</code>, breaking up the main logical sections of the page into separate files allows greater degree of flexibility and modularity.
 
@@ -26,9 +26,6 @@ Additionally, the Index Template contains <a href="http://make.wordpress.org/doc
 
 However this file serves additional functions in WordPress.   Firstly, it is one of  <a href="http://make.wordpress.org/docs/theme-developer-handbook/introduction/what-is-a-theme/#required-files" target=""> two required</a> theme files.  Secondly, it serves as a pattern for several optional files.  Lastly, it is the fallback file in case the optional files are missing.
 
-
-
-
 <h3>Basic Structure</h3>
 
 In the following graphic, you can see the parts of a typical WordPress webpage, and which files <code>index.php</code> includes to render them.
@@ -36,14 +33,14 @@ In the following graphic, you can see the parts of a typical WordPress webpage, 
 <ul>
 	<li>header.php</li>
 	<li>sidebar.php</li>
-	<li></li>
+	<li>index.php</li>
 	<li>footer.php</li>
 </ul>
 <img src="http://make.wordpress.org/docs/files/2014/01/WordPressBuildingBlocks1.jpg" alt="WordPressBuildingBlocks" width="800" height="616" class="alignnone size-medium wp-image-3293" />
 
 
 
-<h4>Index Template Outline</h4>
+<h4>Index Template</h4>
 
 <h5><strong>File Information and Header Include</strong></h5>
 
@@ -62,19 +59,62 @@ Immediately following the document information we include <code>header.php</code
  *
  * @link http://codex.wordpress.org/Template_Hierarchy
  *
- * @package WordPress
- * @subpackage My_Theme
+ * @package Simple Theme
+ * @subpackage My Theme
  * @since My Theme 1.0
  */
 get_header(); ?>[/php]
 
-At this point, you may optionally HTML tags or other coding, or you may jump directly into <a href="http://make.wordpress.org/docs/theme-developer-handbook/theme-basics/the-loop/">The Loop</a>.
-[php]
+The <code>get_header()</code> function calls in (<code>include</code>s) the <code>header.php</code> template file.
 
+<h4>header.php</h4>
+
+The header template file, <code>header.php</code>, includes everything that would appear in top section of a standard HTML page, up to and including the opening body tag.
+
+Here's an example of a basic <code>header.php</code> template file.
+
+[php]
+<?php
+/**
+ * The Header for our theme.
+ *
+ * Displays all of the <head> section.
+ *
+ * @package Simple Theme
+ */
+?><!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>" />
+	<meta name="viewport" content="width=device-width" />
+	<title><?php wp_title( '|', true, 'right' ); ?></title>
+	<?php wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+	<header class="site-header">
+	<h1>
+	<a href="<?php echo home_url(); ?>">
+	<img src="<?php bloginfo('template_directory'); ?>/images/
+	logo.jpg" alt=" ">
+	</a>
+	</h1>
+	</header>
 [/php]
 
-<h4>Header</h4>
-As you might have guessed, <code>header.php</code> includes everything that would appear in top section of a standard HTML page, including the up to and including the opening body tag.
+The file begins with the customary file information in PHPDoc format, followed by the DOCTYPE declaration.  
+
+<h4>language_attributes()</h4>
+
+In the next line you likely noticed a departure from non-WordPress HTML and PHP pages: function replace some hard-coded information.
+
+These WordPress built-in functions serve a similar purpose to variables in programming languages, allowing cleaner code that is easier to maintain.  
+
+In this case, the WordPress <a href="http://codex.wordpress.org/Function_Reference/language_attributes"><code>language_attributes()</code></a> function inserts the appropriate language and text direction attributes in the <code><html></code> tag.
+
+<h4>bloginfo()</h4>
+
+In the <code><head></code> section, we use the very useful <a href="http://codex.wordpress.org/Function_Reference/bloginfo"><code>bloginfo()</code></a> function in a <code><meta></code> tag to insert the charset attribute information.  We say useful, because <code>bloginfo()</code> has over a dozen parameters to choose from.  See the function's <a href="http://codex.wordpress.org/Function_Reference/bloginfo"><code>Codex</code></a> entry for more information.  
+
 <h4>Sidebar</h4>
 <h4>Content</h4>
 <h4>Footer</h4>
